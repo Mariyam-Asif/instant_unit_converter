@@ -2,7 +2,7 @@ import streamlit as st
 import pint
 import speech_recognition as sr
 from dotenv import load_dotenv
-import pyaudio
+import sounddevice as sd
 
 load_dotenv()
 ureg = pint.UnitRegistry()
@@ -115,7 +115,7 @@ with col4:
 #Speech Recognition
     if st.button("Voice Input"):
         recognizer = sr.Recognizer()
-        with sr.Microphone() as source:
+        with sr.AudioFile(sd.rec) as source:
             st.info("Adjusting for ambient noise, please wait...")
             recognizer.adjust_for_ambient_noise(source, duration=2)
             st.info("Listening...Speak now.")
