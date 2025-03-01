@@ -30,6 +30,7 @@ def load_css():
         }
         .conversion-history { 
             background: #222;
+            color: white;
             padding: 10px;
             border-radius: 10px;
             margin-top: 10px;
