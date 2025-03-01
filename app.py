@@ -1,10 +1,8 @@
 import streamlit as st
 import pint
 import speech_recognition as sr
-from dotenv import load_dotenv
 import sounddevice as sd
 
-load_dotenv()
 ureg = pint.UnitRegistry()
 
 st.set_page_config(page_title="Instant Unit Converter", page_icon="🔁", layout="wide")
