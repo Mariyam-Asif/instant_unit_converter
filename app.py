@@ -1,7 +1,6 @@
 import streamlit as st
 import pint
 import speech_recognition as sr
-import sounddevice as sd
 
 ureg = pint.UnitRegistry()
 
@@ -102,33 +101,14 @@ unit_options = {
 selected_category = st.selectbox("Choose a category:", list(unit_options.keys()))
 units = unit_options[selected_category]
 
-col1, col2, col3, col4 = st.columns(4)
+col1, col2, col3 = st.columns(3)
 with col1:
     st.session_state.from_unit = st.selectbox("From", units, index=units.index(st.session_state.from_unit) if st.session_state.from_unit in units else 0)
 with col2:
     st.session_state.to_unit = st.selectbox("To", units, index=units.index(st.session_state.to_unit) if st.session_state.to_unit in units else 1)
 with col3:
     value = st.number_input("Enter value to convert:", min_value=0.0, format="%.2f", key="value", value=st.session_state.get("spoken_value", 0.0))
-with col4:
-#Speech Recognition
-    if st.button("Voice Input"):
-        recognizer = sr.Recognizer()
-        with sr.AudioFile(sd.rec) as source:
-            st.info("Adjusting for ambient noise, please wait...")
-            recognizer.adjust_for_ambient_noise(source, duration=2)
-            st.info("Listening...Speak now.")
-            try:
-                audio = recognizer.listen(source, timeout=6)
-                spoken_value = recognizer.recognize_google(audio)
-                st.session_state.spoken_value = float(spoken_value)
-                st.rerun()
-                st.success(f"Recognized: {st.session_state.spoken_value}")
-            except sr.UnknownValueError:
-                st.error("Could not understand speech. Try speaking more clearly.")
-            except sr.RequestError:
-                st.error("Could not request results from Google Speech Recognition. Check your internet connection.")
-            except ValueError:
-                st.error("Could not convert speech to a number. Try again.")
+
 
 # Conversion Logic 
 def convert_units(value, from_unit, to_unit, category):
