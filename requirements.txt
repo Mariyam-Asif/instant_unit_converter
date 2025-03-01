@@ -1,3 +1,4 @@
 streamlit
 pint
 speechrecognition
+pyaudio
