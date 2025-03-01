@@ -1,7 +1,10 @@
 import streamlit as st
 import pint
 import speech_recognition as sr
+from dotenv import load_dotenv
+import pyaudio
 
+load_dotenv()
 ureg = pint.UnitRegistry()
 
 st.set_page_config(page_title="Instant Unit Converter", page_icon="🔁", layout="wide")
@@ -39,7 +42,7 @@ def load_css():
         select, input {
             background: #333;
             color: white;
-            font-size:18px
+            font-size:18px;
             border-radius: 20px;
             border: 1px solid #007BFF;
             padding: 5px;
@@ -125,7 +128,7 @@ with col4:
             except sr.UnknownValueError:
                 st.error("Could not understand speech. Try speaking more clearly.")
             except sr.RequestError:
-                st.error("Could not reuqest results from Google Speech Recognition. Check your internet connection.")
+                st.error("Could not request results from Google Speech Recognition. Check your internet connection.")
             except ValueError:
                 st.error("Could not convert speech to a number. Try again.")
 
